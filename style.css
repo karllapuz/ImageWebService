@@ -1,0 +1,18 @@
+#home {
+    min-height: 1000px;
+    background-color: pink;
+}
+
+#home .logo img {
+    width: 50%;
+    margin-top: 20%;
+}
+
+#home .buttons {
+    margin-top: 3%;
+}
+
+#home .buttons .button {
+    margin: 0 3%;
+}
+
