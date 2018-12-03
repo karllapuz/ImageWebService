@@ -7,6 +7,29 @@
     if($conn->connect_error) die($conn->connect_error);
     
     // Create customer table
+    function createImageTable($conn) {
+        $init = "
+            DROP TABLE IF EXISTS imageInfo
+        ";
+        $query = "
+        CREATE TABLE imageInfo (
+            imageID int(11) NOT NULL AUTO_INCREMENT,
+            imageName varchar(256),
+            category varchar(256),
+            imagePath varchar(256),
+            resolution varchar(256),
+            size varchar(256),
+            photographer varchar(256),
+            primary key ( imageID )
+        );
+        ";
+        // echo $query;
+        $initResult = $conn->query($init);
+        $result = $conn->query($query);
+        if (!$result) die ("Database access failed: " . $conn->error);
+    }
+
+    // Create customer table
     function createCustomerTable($conn) {
         $init = "
             DROP TABLE IF EXISTS customer
@@ -36,7 +59,7 @@
         $query = "
         CREATE TABLE transaction (
             transactionID int(11) NOT NULL AUTO_INCREMENT,
-            customerID int(11),
+            username varchar(126),
             imageID int(11),
             ts TIMESTAMP,
             primary key ( transactionID )
@@ -49,6 +72,7 @@
     }
 
     createCustomerTable($conn);
-    createTransactionTable($conn)
+    createTransactionTable($conn);
+    // createImageTable($conn);
 
 ?>
