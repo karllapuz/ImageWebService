@@ -16,3 +16,22 @@
     margin: 0 3%;
 }
 
+#register {
+    min-height: 102%;
+    background-color: #b5f2dc;
+}
+
+#register .column {
+    margin: 3em auto;
+    max-width: 450px;
+}
+
+#login {
+    min-height: 102%;
+    background-color: #b5f2dc;
+}
+
+#login .column {
+    margin: 3em auto;
+    max-width: 450px;
+}
