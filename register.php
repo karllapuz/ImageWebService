@@ -1,3 +1,4 @@
+<?php include('server.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,27 +19,28 @@
                 <div class="ui center aligned header">
                     <h2>Register</h2>
                 </div>
-                <form class="ui large form" action="index.php" method="post">
+                <form class="ui large form" action="register.php" method="post">
+                <?php include('errors.php'); ?>
                     <div class="ui stacked left aligned segment">
                         <div class="field">
                             <label>First Name</label>
-                            <input type="text" name="firstName" placeholder="First Name">
+                            <input type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName; ?>">
                         </div>
                         <div class="field">
                             <label>Last Name</label>
-                            <input type="text" name="lastName" placeholder="Last Name">
+                            <input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName; ?>">
                         </div>
                         <div class="field">
                             <label>Username</label>
-                            <input type="text" name="username" placeholder="Username">
+                            <input type="text" name="username" placeholder="Username" value="<?php echo $username; ?>">
                         </div>
                         <div class="field">
                             <label>Password</label>
-                            <input type="password" name="password1" placeholder="Password">
+                            <input type="password" name="password_1" placeholder="Password">
                         </div>
                         <div class="field">
                             <label>Confirm Password</label>
-                            <input type="password" name="password2" placeholder="Confirm Password">
+                            <input type="password" name="password_2" placeholder="Confirm Password">
                         </div>
                         <div class="field">
                             <input class="ui large fluid teal submit button" type="submit" value="Register" name="register">
