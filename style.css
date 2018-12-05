@@ -1,3 +1,14 @@
+@font-face {
+    font-family: phosphate;
+    src: url(assets/fonts/Phosphate.ttc);
+}
+
+h1 {
+    font-family: phosphate;
+    letter-spacing: 10px;
+    font-size: 4em;
+}
+
 #home {
     min-height: 1000px;
     background-color: pink;
@@ -34,4 +45,16 @@
 #login .column {
     margin: 3em auto;
     max-width: 450px;
+}
+
+#gallery {
+    background-color: #b5f2dc;
+}
+
+#navbar {
+    padding-top: 10px;
+}
+
+#gallery .divider {
+    margin: 3% 0;
 }

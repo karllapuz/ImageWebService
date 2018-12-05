@@ -16,7 +16,7 @@
         <div class="ui middle aligned center aligned grid">
             <div class="column">
                 <div class="ui center aligned header">
-                    <h1>Register</h1>
+                    <h2>Register</h2>
                 </div>
                 <form class="ui large form" action="index.php" method="post">
                     <div class="ui stacked left aligned segment">
