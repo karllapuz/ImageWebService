@@ -59,6 +59,9 @@
                             </div>
                         </div> -->
                         <div class="ui item">
+                            <p><strong>Welcome, First Name</strong></p>
+                        </div>
+                        <div class="ui item">
                             <button class="ui right labeled icon green button">
                             <i class="plus icon"></i>
                                 Credits: 3
