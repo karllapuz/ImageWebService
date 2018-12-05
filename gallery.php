@@ -32,7 +32,7 @@
                     <div class="logo header item">
                         <img src="assets/logo/MikaLogo.png" alt="Logo">
                     </div>
-                    <a class="item">
+                    <a class="item" href="profile.php">
                         <i class="home icon"></i>
                         Home
                     </a>
