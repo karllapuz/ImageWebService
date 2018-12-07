@@ -6,7 +6,7 @@
     include('server.php');
     if (!isset($_SESSION['username'])) {
         $_SESSION['msg'] = "You must log in first";
-        header('location: signin.php');
+        header('location: login.php');
     }
 
     if(!empty($_GET["action"])) {
