@@ -44,9 +44,9 @@
                             Credits: 3
                         </button>
                     </div>
-                    <a class="ui item">
-                        <div class="ui negative button">Logout</div>
-                    </a>
+                    <div class="ui item">
+                        <a class="ui negative button" href="gallery.php?action=logout">Log Out</a>
+                    </div>
                 </div>
             </div>
         </div>  
@@ -173,20 +173,24 @@
         </div>
 
         <!-- UPLOAD MODAL -->
-        <div id="uploadModal" class="ui small modal">
+        <div id="uploadModal" class="ui modal">
             <i class="close icon"></i>
             <div class="header">
                 Upload a Photo
             </div>
             <div class="image content">
                 <div class="image">
-                    <img id="preview" src="https://ispyvisuals.com/wp-content/themes/ispy/images/placeholder-image.png" alt="Preview">
+                    <img id="preview" src="assets/images/placeholder.jpg" alt="Preview">
                 </div>
                 <div class="description">
                     <form class="ui large form" action="" method="post">
-                        <div class="fluid field">
+                        <div class="field">
                             <label>Upload Image</label>
-                            <input class="fluid" id="imgInp" type="file" name="image">
+                            <input id="imgInp" type="file" name="image">
+                        </div>
+                        <div class="field">
+                            <label>Image Name</label>
+                            <input type="text" name="image_name" placeholder="Image Name">
                         </div>
                         <div class="field">
                             <label>Category</label>
@@ -209,6 +213,10 @@
                         <div class="field">
                             <label>Photographer</label>
                             <input type="text" name="photographer" placeholder="Name">
+                        </div>
+                        <div class="field">
+                            <label>Credits</label>
+                            <input type="number" class="credits" name="credits" placeholder="0" min="0">
                         </div>
                         <div class="field">
                             <input class="ui fluid teal submit button" type="submit" value="Upload Photo" name="">
