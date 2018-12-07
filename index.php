@@ -1,3 +1,7 @@
+<?php
+    $pink = "pink";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,5 +34,13 @@
             </a>
         </div>
     </section>
+
+    <ul class="slideshow">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </body>
 </html>
