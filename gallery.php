@@ -2,6 +2,23 @@
     $categories = array("Travel", "Architecture", "People", "Nature", "Food", "Arts", "Sports", "Others");
     $categoryIcon = array("plane", "university", "user", "tree", "utensils", "paint brush", "football ball", "camera");
     $categoryDesc = array("See the beauty of the world from the lens of travellers", "Architecture", "People", "Nature", "Food", "Arts", "Sports", "Others");
+    
+    include('server.php');
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: signin.php');
+    }
+
+    if(!empty($_GET["action"])) {
+        switch($_GET["action"]) {
+            case "logout":
+                session_destroy();
+                unset($_SESSION["username"]);
+                header("location: index.php");
+        }
+    }
+
+    // echo $_SESSION['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +76,7 @@
                             </div>
                         </div> -->
                         <div class="ui item">
-                            <p><strong>Welcome, First Name</strong></p>
+                            <p><strong>Welcome, <?php echo $_SESSION['username']; ?> !</strong></p>
                         </div>
                         <div class="ui item">
                             <button class="ui right labeled icon green button">
@@ -68,7 +85,7 @@
                             </button>
                         </div>
                         <a class="ui item">
-                            <div class="ui negative button">Logout</div>
+                            <a class="ui negative button" href="gallery.php?action=logout">Log Out</a>
                         </a>
                     </div>
                 </div>
