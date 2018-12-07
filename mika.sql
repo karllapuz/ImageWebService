@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2018 at 12:41 AM
+-- Generation Time: Dec 07, 2018 at 02:04 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -43,9 +43,7 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`customerID`, `username`, `password`, `firstName`, `lastName`, `userType`) VALUES
 (3, 'imichelle97', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Michelle ', 'Luong', 'Customer'),
-(4, 'kate', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Kate', 'Tran', 'Photographer'),
-(5, 'will', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'William', 'Barrera', 'Customer'),
-(11, 'cjavan', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'cyrus', 'javan', 'user');
+(13, 'karl', 'd488364a270f555365152cd0f734532db926081d', 'Karl', 'Lapuz', 'user');
 
 -- --------------------------------------------------------
 
@@ -131,7 +129,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `imageInfo`
