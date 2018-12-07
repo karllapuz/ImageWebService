@@ -67,7 +67,7 @@
                 <!-- RENDERED IF USER IS SELLER -->
                 <span class="ui green label">Certified Seller</span>
             </h2>
-            <div class="ui container buttons">
+            <div class="ui container">
                 
                 <!-- RENDERED IF USER IS SELLER  -->
                 <div id="uploadButton" class="ui animated teal button" tabindex="0">
