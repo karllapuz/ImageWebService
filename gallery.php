@@ -47,7 +47,7 @@
             <div id="navbar" class="ui container">
                 <div class="ui large secondary menu">
                     <div class="logo header item">
-                        <img src="assets/logo/MikaLogo.png" alt="Logo">
+                        <img src="assets/images/MikaLogo.png" alt="Logo">
                     </div>
                     <a class="item" href="profile.php">
                         <i class="home icon"></i>
@@ -84,9 +84,9 @@
                                 Credits: 3
                             </button>
                         </div>
-                        <a class="ui item">
+                        <div class="ui item">
                             <a class="ui negative button" href="gallery.php?action=logout">Log Out</a>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>  
