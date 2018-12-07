@@ -62,3 +62,13 @@ h1 {
 #profile {
     background-color: #b5f2dc;
 }
+
+#uploadModal img{
+    max-width: 250px;
+    max-height: 250px;
+}
+
+#profile .photos {
+    margin-top: 2em;
+    padding-bottom: 3em;
+}
