@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
+    <title>Michelle's Profile</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
@@ -103,7 +103,7 @@
         </div>
 
         <!-- MY PHOTOS -->
-        <div class="ui center aligned container">
+        <div class="ui photos center aligned container">
             <h2 class="ui teal top attached left aligned header">
                 <i class="book icon"></i>
                 <div class="content">
@@ -180,7 +180,7 @@
             </div>
             <div class="image content">
                 <div class="image">
-                    <img id="preview" src="#" alt="Preview">
+                    <img id="preview" src="https://ispyvisuals.com/wp-content/themes/ispy/images/placeholder-image.png" alt="Preview">
                 </div>
                 <div class="description">
                     <form class="ui large form" action="" method="post">
@@ -190,7 +190,21 @@
                         </div>
                         <div class="field">
                             <label>Category</label>
-                            <input type="text" name="category" placeholder="Travel, Sports, Food, etc...">
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="gender">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Category</div>
+                                <div class="menu">
+                                    <div class="item" data-value="1">Travel</div>
+                                    <div class="item" data-value="2">Architecture</div>
+                                    <div class="item" data-value="3">People</div>
+                                    <div class="item" data-value="4">Nature</div>
+                                    <div class="item" data-value="5">Food</div>
+                                    <div class="item" data-value="6">Arts</div>
+                                    <div class="item" data-value="7">Sports</div>
+                                    <div class="item" data-value="8">Others</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="field">
                             <label>Photographer</label>
@@ -207,6 +221,7 @@
     </section>
 
     <script>
+        $('.ui.dropdown').dropdown('show');
         $('.dimmable').dimmer({
             on: 'hover'
         });
