@@ -14,7 +14,7 @@
     <section id="home">
         <div class="ui center aligned header">
             <div class="logo">
-                <img src="assets/logo/MikaLogo.png" alt="Logo">
+                <img src="assets/images/MikaLogo.png" alt="Logo">
             </div>
         </div>
         <div class="ui center aligned buttons container">
