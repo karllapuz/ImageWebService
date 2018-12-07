@@ -1,3 +1,4 @@
+<?php include('server.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
                 <div class="ui center aligned header">
                     <h2>Log in</h2>
                 </div>
-                <form class="ui large form" action="index.php" method="post">
+                <form class="ui large form" action="login.php" method="post">
                     <div class="ui stacked left aligned segment">
                         <div class="field">
                             <label>Username</label>
