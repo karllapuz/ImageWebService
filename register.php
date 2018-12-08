@@ -42,6 +42,20 @@
                             <label>Confirm Password</label>
                             <input type="password" name="password_2" placeholder="Confirm Password">
                         </div>
+                        <div class="inline fields">
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="userType" value="consumer" checked="checked">
+                                    <label>Consumer</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="userType" value="seller">
+                                    <label>Seller</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="field">
                             <input class="ui large fluid teal submit button" type="submit" value="Register" name="register">
                         </div>

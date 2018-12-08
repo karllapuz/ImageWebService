@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 07, 2018 at 02:04 AM
+-- Generation Time: Dec 08, 2018 at 07:31 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -34,16 +34,18 @@ CREATE TABLE `customer` (
   `password` varchar(256) DEFAULT NULL,
   `firstName` varchar(256) DEFAULT NULL,
   `lastName` varchar(256) DEFAULT NULL,
-  `userType` varchar(128) DEFAULT NULL
+  `userType` varchar(128) DEFAULT NULL,
+  `credits` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customerID`, `username`, `password`, `firstName`, `lastName`, `userType`) VALUES
-(3, 'imichelle97', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Michelle ', 'Luong', 'Customer'),
-(13, 'karl', 'd488364a270f555365152cd0f734532db926081d', 'Karl', 'Lapuz', 'user');
+INSERT INTO `customer` (`customerID`, `username`, `password`, `firstName`, `lastName`, `userType`, `credits`) VALUES
+(3, 'imichelle97', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Michelle ', 'Luong', 'seller', 0),
+(13, 'karl', 'd488364a270f555365152cd0f734532db926081d', 'Karl', 'Lapuz', 'seller', 0),
+(15, 'jane', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Jane', 'Doe', 'consumer', 0);
 
 -- --------------------------------------------------------
 
@@ -56,20 +58,19 @@ CREATE TABLE `imageInfo` (
   `imageName` varchar(256) DEFAULT NULL,
   `category` varchar(256) DEFAULT NULL,
   `imagePath` varchar(256) DEFAULT NULL,
-  `resolution` varchar(256) DEFAULT NULL,
-  `size` varchar(256) DEFAULT NULL,
-  `photographer` varchar(256) DEFAULT NULL
+  `photographer` varchar(256) DEFAULT NULL,
+  `credits` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `imageInfo`
 --
 
-INSERT INTO `imageInfo` (`imageID`, `imageName`, `category`, `imagePath`, `resolution`, `size`, `photographer`) VALUES
-(1, 'San Diego Sunset', 'Nature', 'IMG_2312.JPG', 'width=\"1200\" height=\"800\"', '157127', 'M Luong'),
-(2, 'Union Square SF', 'City', 'IMG_5518.JPG', 'width=\"4032\" height=\"3024\"', '3018105', 'M Luong'),
-(3, 'San Francisco', 'Nature ', 'IMG_5520.JPG', 'width=\"1334\" height=\"750\"', '287022', 'M Luong'),
-(4, 'Santa Cruz Waves', 'Nature', 'IMG_2422.JPG', 'width=\"2048\" height=\"1366\"', '603091', 'M Luong');
+INSERT INTO `imageInfo` (`imageID`, `imageName`, `category`, `imagePath`, `photographer`, `credits`) VALUES
+(1, 'San Diego Sunset', 'Nature', 'IMG_2312.JPG', 'M Luong', 0),
+(2, 'Union Square SF', 'City', 'IMG_5518.JPG', 'M Luong', 0),
+(3, 'San Francisco', 'Nature ', 'IMG_5520.JPG', 'M Luong', 0),
+(4, 'Santa Cruz Waves', 'Nature', 'IMG_2422.JPG', 'M Luong', 0);
 
 -- --------------------------------------------------------
 
@@ -129,7 +130,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `imageInfo`

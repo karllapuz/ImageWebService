@@ -76,7 +76,7 @@
                             </div>
                         </div> -->
                         <div class="ui item">
-                            <p><strong>Welcome, <?php echo $_SESSION['username']; ?> !</strong></p>
+                            <p><strong>Welcome, <?php echo $_SESSION['username']; ?>!</strong></p>
                         </div>
                         <div class="ui item">
                             <button class="ui right labeled icon green button">

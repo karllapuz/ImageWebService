@@ -28,7 +28,11 @@
         // Check if passwords match
 		if ($password_1 != $password_2) {
 			array_push($errors, "The two passwords do not match");
-        }
+		}
+		
+		if(isset($_POST['userType']) && !empty($_POST['userType'])){
+			$userType= $_POST['userType'];
+		}
         
         $usernameError = "SELECT * FROM customer WHERE username = '$username';";
 		$usernameResults = mysqli_query($db, $usernameError);
@@ -43,7 +47,7 @@
 			$password = sha1($password_1);
 	
 			$query = "INSERT INTO customer (customerID, username, password, firstName, lastName, userType) 
-					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', 'user')";
+					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', '$userType')";
             $results = mysqli_query($db, $query);
             // echo $query;
 

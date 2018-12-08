@@ -1,10 +1,49 @@
+<?php
+
+    include('server.php');
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: login.php');
+    }
+
+    if(!empty($_GET["action"])) {
+        switch($_GET["action"]) {
+            case "logout":
+                session_destroy();
+                unset($_SESSION["username"]);
+                header("location: index.php");
+        }
+    }
+
+    // Fetch user information
+    $username = $_SESSION['username'];
+    $userQuery = "SELECT * FROM customer WHERE username='$username';";
+    $userResults = mysqli_query($db, $userQuery);
+    if(mysqli_num_rows($userResults) == 1) {
+        $user = mysqli_fetch_assoc($userResults);
+        $userID = $user['customerID'];
+        $firstName = $user['firstName'];
+        $lastName = $user['lastName'];
+        $userType = $user['userType'];
+        $credits = $user['credits'];
+    }
+
+    // if($userType == 'consumer') {
+    //     echo "Consumer";
+    // } else if($userType == 'seller') {
+    //     echo "Seller";
+    // }
+
+    // echo $_SESSION['username'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Michelle's Profile</title>
+    <title><?php echo $firstName?>'s Profile</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
@@ -36,12 +75,12 @@
                         </div>
                     </div> -->
                     <div class="ui item">
-                        <p><strong>Welcome, Michelle</strong></p>
+                        <p><strong>Welcome, <?php echo $_SESSION['username']; ?>!</strong></p>
                     </div>
                     <div class="ui item">
                         <button class="ui right labeled icon green button">
                         <i class="plus icon"></i>
-                            Credits: 3
+                            Credits: <?php echo $credits ?>
                         </button>
                     </div>
                     <div class="ui item">
@@ -61,23 +100,27 @@
             <h2 class="ui center aligned icon header">
                 <div class="ui container">
                     <i class="inverted circular user icon"></i>
-                    Michelle Luong
+                    <?php echo $firstName . " " . $lastName ?>
                 </div>
-                <span><em><h3>@imichellexo</h3></em></span>
+                <span><em><h3>@<?php echo $username?></h3></em></span>
                 <!-- RENDERED IF USER IS SELLER -->
-                <span class="ui green label">Certified Seller</span>
+                <?php if($userType == 'seller') { ?>
+                    <span class="ui green label">Certified Seller</span>
+                <?php } ?>
             </h2>
             <div class="ui container">
                 
                 <!-- RENDERED IF USER IS SELLER  -->
-                <div id="uploadButton" class="ui animated teal button" tabindex="0">
-                    <div class="visible content">
-                        Upload a Photo
+                <?php if($userType == 'seller') { ?>
+                    <div id="uploadButton" class="ui animated teal button" tabindex="0">
+                        <div class="visible content">
+                            Upload a Photo
+                        </div>
+                        <div class="hidden content">
+                            <i class="upload icon"></i>
+                        </div>
                     </div>
-                    <div class="hidden content">
-                        <i class="upload icon"></i>
-                    </div>
-                </div>
+                <?php } ?>
 
                 <!-- RENDERED IF USER IS NOT SELLER  -->
                 <!-- <div id="sellerButton" class="ui animated teal button" tabindex="0">
