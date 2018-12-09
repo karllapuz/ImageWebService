@@ -10,6 +10,8 @@
     $lastName = "";
     $username = "";
 
+	// CUSTOMER DATABASE
+	// Register a user
     if (isset($_POST['register'])) { 
 
         // Fetch inputs
@@ -43,7 +45,7 @@
 			$password = sha1($password_1);
 	
 			$query = "INSERT INTO customer (customerID, username, password, firstName, lastName, userType, credits) 
-					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', 'consumer', '35')";
+					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', 'consumer', 35)";
             $results = mysqli_query($db, $query);
             // echo $query;
 
@@ -53,6 +55,7 @@
 		}
     }
 
+	// Logs in a user
     if (isset($_POST['login'])) { 
         $username = mysqli_real_escape_string($db, $_POST['username']);
 		$password = mysqli_real_escape_string($db, $_POST['password']);
@@ -83,6 +86,7 @@
 		}
 	}
 
+	// Converts a user from consumer to seller
 	if(isset($_POST['becomeSeller'])) {
 		$username = $_SESSION['username'];
 		$becomeSellerQuery = "UPDATE customer SET userType = 'seller' WHERE username = '$username';";
@@ -90,5 +94,40 @@
 		$r = mysqli_query($db, $becomeSellerQuery); 
 	}
 
+	$image_link = "";
+	$image_name = "";
+	$category = "";
+	$photographer = "";
+	$credits = 1;
+
+	// IMAGES DATABASE
+	// Uploads an image to the gallery
+	if (isset($_POST['upload_image'])) {
+
+        if (empty($_POST["image"]) || empty($_POST["image_name"]) || empty($_POST["credits"]) || empty($_POST["category"]) || empty($_POST["photographer"])) {
+
+        } else {
+			$image_link = $_POST["image"];
+			$image_name = $_POST["image_name"];
+            $category = $_POST["category"];
+			$photographer = $_POST["photographer"];
+			$credits = $_POST["credits"];
+
+            // Get customer id of the poster
+            if (isset($_SESSION['username'])) {
+
+                $username = $_SESSION['username'];
+                
+                $query = "INSERT INTO imageInfo (imageID, imageName, category, imagePath, photographer, credits, uploader, purchases) 
+                            VALUES(NULL, '$image_name', '$category', '$image_link', '$photographer', '$credits', '$username', 0)";
+                if (!mysqli_query($db, $query)) {
+					echo "ERROR: Could not execute. " . mysqli_error($db);
+				}
+            }
+            else {
+                header("Location: login.php");
+            }
+        }
+    }
 
 ?>
