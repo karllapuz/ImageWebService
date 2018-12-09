@@ -23,12 +23,12 @@
         </div>
         <div class="ui center aligned buttons container">
             <a href="login.php">
-                <div class="ui massive inverted button">
+                <div class="ui large button">
                     Log in
                 </div>
             </a>
             <a href="register.php">
-                <div class="ui massive green button">
+                <div class="ui large green button">
                     Register
                 </div>
             </a>
