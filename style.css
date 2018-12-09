@@ -14,11 +14,11 @@ h1 {
     z-index: 1;
     position: relative;
     text-align: center;
-    padding-top: 20vh;
+    padding-top: 30vh;
 }
 
 #home .logo img {
-    width: 50%;
+    width: 30%;
     filter: drop-shadow(5px 5px 5px #222);
 }
 
@@ -27,7 +27,8 @@ h1 {
 }
 
 #home .buttons .button {
-    margin: 0 3%;
+    margin: 0 1.5%;
+    filter: drop-shadow(2px 2px 2px #222);
 }
 
 #register {
@@ -59,6 +60,14 @@ h1 {
 }
 
 #gallery .divider {
+    margin: 3% 0;
+}
+
+.category {
+    background-color: #b5f2dc;
+}
+
+.category .divider {
     margin: 3% 0;
 }
 
