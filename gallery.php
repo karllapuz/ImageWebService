@@ -1,7 +1,14 @@
 <?php
     $categories = array("Travel", "Architecture", "People", "Nature", "Food", "Arts", "Sports", "Others");
     $categoryIcon = array("plane", "university", "user", "tree", "utensils", "paint brush", "football ball", "camera");
-    $categoryDesc = array("See the beauty of the world from the lens of travellers", "Architecture", "People", "Nature", "Food", "Arts", "Sports", "Others");
+    $categoryDesc = array("See the beauty of the world from the lens of adventurers and trailblazers", 
+                          "From skyscrapers to quirky structures, these shots are always a sight for sore eyes", 
+                          "True candid moments and experiences of every day people showing the essence of humanity", 
+                          "Immerse in the serenity and scenic looks of nature captured by only the best", 
+                          "Feast and find delicious delicacies around the world from street foods to high end dining", 
+                          "Discover classic and modern works of art in different medium and background", 
+                          "Greatness of human power and skill are captured in different genres of sports", 
+                          "Other photographic contents that are just too specific and unique to be categorized");
     
     include('server.php');
     if (!isset($_SESSION['username'])) {
@@ -50,8 +57,8 @@
         
         <!-- SHOPPING CART -->
         <div class="ui vertical inverted wide sidebar menu">
-            <div class="item">
-                Shopping Cart
+            <div class="header item">
+                <h2>Shopping Cart</h2>
             </div>
         </div>
 
@@ -71,14 +78,14 @@
                         Categories
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a class="item">Travel</a>
-                            <a class="item">Architecture</a>
-                            <a class="item">People</a>
-                            <a class="item">Nature</a>
-                            <a class="item">Food</a>
-                            <a class="item">Arts</a>
-                            <a class="item">Sports</a>
-                            <a class="item">Others</a>
+                            <a href="travel.php"class="item">Travel</a>
+                            <a href="architecture.php"class="item">Architecture</a>
+                            <a href="people.php"class="item">People</a>
+                            <a href="nature.php"class="item">Nature</a>
+                            <a href="food.php"class="item">Food</a>
+                            <a href="arts.php"class="item">Arts</a>
+                            <a href="sports.php"class="item">Sports</a>
+                            <a href="others.php"class="item">Others</a>
                         </div>
                     </div>
                     <div class="right menu">
@@ -129,13 +136,13 @@
                 <div class="ui raised attached segment">
                     <div class="ui four center aligned doubling stackable container cards">
 
-                        <?php for ($i = 1; $i <= 4; $i++) { ?>
+                        <?php for ($i = 1; $i <= 8; $i++) { ?>
                             <div class="ui column raised card">
                                 <div class="ui blurring dimmable image">
                                     <div class="ui dimmer">
                                         <div class="content">
                                             <div class="center">
-                                            <a><div class="ui inverted green button"><i class="dollar sign icon"></i>Buy</div></a>
+                                            <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
                                             </div>
                                         </div>
                                     </div>
@@ -155,12 +162,9 @@
                                     </div>
                                 </div>
                                 <div class="extra content">
-                                    <span class="left floated like">
-                                        <i class="like icon"></i>
-                                        Like
-                                    </span>
-                                    <span class="right floated">
-                                        51 Likes
+                                    <span class="left floated">
+                                        <i class="users icon"></i>
+                                        12 Purchases
                                     </span>
                                 </div>
                             </div>
@@ -171,11 +175,11 @@
             
             <!-- DIVIDER -->
             <div class="ui horizontal divider container">
-                TOP PICKS BY CATEGORY
+                VIEW ALL PHOTOS BY CATEGORY
             </div>
 
             <!-- OTHER CATEGORIES -->
-            <div id="category-segment" class="ui two column doubling stackable grid container">
+            <div id="category-segment" class="ui four column doubling stackable grid container">
                 <?php for ($j = 0; $j <= 7; $j++) { ?>
                     <div class="column">
                         <div class="ui center aligned container">
@@ -188,10 +192,10 @@
                                     </div>
                                 </div>    
                             </h2>
-                            <div class="ui raised attached segment">
+                            <!-- <div class="ui raised attached segment">
                                 <div class="ui two center aligned doubling stackable container cards">
 
-                                    <?php for ($k = 1; $k <= 2; $k++) { ?>
+                                    <?php // for ($k = 1; $k <= 2; $k++) { ?>
                                         <div class="ui column raised card">
                                             <div class="ui blurring dimmable image">
                                                 <div class="ui dimmer">
@@ -226,14 +230,14 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    <?php // } ?>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ui bottom attached segment">
-                                <button class="ui fluid teal button">
+                                <a href="<?php echo strtolower($categories[$j]); ?>.php" class="ui fluid teal button">
                                     <i class="grid layout icon"></i>
                                     View all
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
