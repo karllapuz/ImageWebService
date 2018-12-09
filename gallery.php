@@ -57,8 +57,99 @@
         
         <!-- SHOPPING CART -->
         <div class="ui vertical inverted wide sidebar menu">
-            <div class="header item">
-                <h2>Shopping Cart</h2>
+            <div class="item">
+                <div class="header">
+                    <h2>Shopping Cart</h2>
+                </div>
+                <div class="ui middle aligned divided list">
+                    <div class='item'>
+                        <div class='ui grid'>
+
+                            <div class='row'>
+                                <div class='ten wide column middle aligned content'>
+                                    Name of Photo <br>
+                                    <em>by John Doe</em>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <strong>1</strong>
+                                    <i class="copyright icon"></i>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <a href="" class="ui negative icon button">
+                                        <i class="trash alternate icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class='row'>
+                                <div class='ten wide column middle aligned content'>
+                                    Name of Photo <br>
+                                    <em>by Michelle Luong</em>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <strong>3</strong>
+                                    <i class="copyright icon"></i>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <a href="" class="ui negative icon button">
+                                        <i class="trash alternate icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class='row'>
+                                <div class='ten wide column middle aligned content'>
+                                    Name of Photo <br>
+                                    <em>by Karl Lapuz</em>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <strong>2</strong>
+                                    <i class="copyright icon"></i>
+                                </div>
+                                <div class='three wide column middle aligned content'>
+                                    <a href="" class="ui negative icon button">
+                                        <i class="trash alternate icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> 
+                </div> 
+            </div>
+
+            <!-- TOTAL -->
+            <div class="item">
+                <div class="ui grid">
+                    <div class="row">
+                        <div class="ten wide column">
+                            <span><h3>Total:</h3></span>
+                        </div>
+                        <div class="six wide column right floated right aligned">
+                            <span><h3>
+                                <strong>6</strong>
+                                <i class="copyright icon"></i>
+                            </h3></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PURCHASE BUTTON -->
+            <div class="item">
+
+                <!-- RENDER IF TOTAL IS GREATER THAN CREDITS -->
+                <div class='ui negative limit message'>
+                    <div class='header'>
+                        Insufficient Credits!
+                    </div>
+                    <p>You do not have enough credits to make this purchase. Please remove some items in your shopping cart or add credits to your account.</p>
+                </div>
+                <button class='ui disabled fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+
+                <!-- VALID PURCHASE BUTTON -->
+                <button class='ui fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+
             </div>
         </div>
 
