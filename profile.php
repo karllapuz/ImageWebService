@@ -228,7 +228,7 @@
                     <img id="preview" src="assets/images/placeholder.jpg" alt="Preview">
                 </div>
                 <div class="description">
-                    <form class="ui large form" action="" method="post">
+                    <form class="ui large form" action="profile.php" method="post">
                         <div class="field">
                             <label>Upload Image</label>
                             <input id="imgInp" type="file" name="image">
@@ -240,18 +240,18 @@
                         <div class="field">
                             <label>Category</label>
                             <div class="ui selection dropdown">
-                                <input type="hidden" name="gender">
+                                <input type="hidden" name="category">
                                 <i class="dropdown icon"></i>
                                 <div class="default text">Category</div>
                                 <div class="menu">
-                                    <div class="item" data-value="1">Travel</div>
-                                    <div class="item" data-value="2">Architecture</div>
-                                    <div class="item" data-value="3">People</div>
-                                    <div class="item" data-value="4">Nature</div>
-                                    <div class="item" data-value="5">Food</div>
-                                    <div class="item" data-value="6">Arts</div>
-                                    <div class="item" data-value="7">Sports</div>
-                                    <div class="item" data-value="8">Others</div>
+                                    <div class="item" data-value="Travel">Travel</div>
+                                    <div class="item" data-value="Architecture">Architecture</div>
+                                    <div class="item" data-value="People">People</div>
+                                    <div class="item" data-value="Nature">Nature</div>
+                                    <div class="item" data-value="Food">Food</div>
+                                    <div class="item" data-value="Arts">Arts</div>
+                                    <div class="item" data-value="Sports">Sports</div>
+                                    <div class="item" data-value="Others">Others</div>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                             <input type="number" class="credits" name="credits" placeholder="0" min="0">
                         </div>
                         <div class="field">
-                            <input class="ui fluid teal submit button" type="submit" value="Upload Photo" name="">
+                            <input class="ui fluid teal submit button" type="submit" value="Upload Photo" name="upload_image">
                         </div>
                     </form>
                 </div>
@@ -304,6 +304,15 @@
         $('#sellerButton').on('click', function() {
             $('#sellerModal')
                 .modal('show');
+        });
+        $('.ui.form').form({
+            fields: {
+                image        : 'empty',
+                image_name   : 'empty',
+                category     : 'empty',
+                photographer : 'empty',
+                credits      : 'empty'
+            }
         });
     </script>
 </body>
