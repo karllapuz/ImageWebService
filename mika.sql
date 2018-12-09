@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 08, 2018 at 07:31 AM
+-- Generation Time: Dec 09, 2018 at 02:00 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -45,7 +45,8 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` (`customerID`, `username`, `password`, `firstName`, `lastName`, `userType`, `credits`) VALUES
 (3, 'imichelle97', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Michelle ', 'Luong', 'seller', 0),
 (13, 'karl', 'd488364a270f555365152cd0f734532db926081d', 'Karl', 'Lapuz', 'seller', 0),
-(15, 'jane', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Jane', 'Doe', 'consumer', 0);
+(15, 'jane', '9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684', 'Jane', 'Doe', 'consumer', 0),
+(18, 'test1', 'b444ac06613fc8d63795be9ad0beaf55011936ac', 'test1', 'test1', 'seller', 35);
 
 -- --------------------------------------------------------
 
@@ -59,18 +60,21 @@ CREATE TABLE `imageInfo` (
   `category` varchar(256) DEFAULT NULL,
   `imagePath` varchar(256) DEFAULT NULL,
   `photographer` varchar(256) DEFAULT NULL,
-  `credits` int(11) NOT NULL
+  `credits` int(11) NOT NULL,
+  `uploader` varchar(256) DEFAULT NULL,
+  `purchases` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `imageInfo`
 --
 
-INSERT INTO `imageInfo` (`imageID`, `imageName`, `category`, `imagePath`, `photographer`, `credits`) VALUES
-(1, 'San Diego Sunset', 'Nature', 'IMG_2312.JPG', 'M Luong', 0),
-(2, 'Union Square SF', 'City', 'IMG_5518.JPG', 'M Luong', 0),
-(3, 'San Francisco', 'Nature ', 'IMG_5520.JPG', 'M Luong', 0),
-(4, 'Santa Cruz Waves', 'Nature', 'IMG_2422.JPG', 'M Luong', 0);
+INSERT INTO `imageInfo` (`imageID`, `imageName`, `category`, `imagePath`, `photographer`, `credits`, `uploader`, `purchases`) VALUES
+(1, 'San Diego Sunset', 'Nature', 'IMG_2312.JPG', 'M Luong', 0, NULL, NULL),
+(2, 'Union Square SF', 'City', 'IMG_5518.JPG', 'M Luong', 0, NULL, NULL),
+(3, 'San Francisco', 'Nature ', 'IMG_5520.JPG', 'M Luong', 0, NULL, NULL),
+(4, 'Santa Cruz Waves', 'Nature', 'IMG_2422.JPG', 'M Luong', 0, NULL, NULL),
+(8, 'Capitola Houses', 'Architecture', '82AF9669-8A07-4AAD-A7B1-7A0C0572282E.jpg', 'Katelynn Tran', 4, 'karl', 0);
 
 -- --------------------------------------------------------
 
@@ -130,13 +134,13 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `imageInfo`
 --
 ALTER TABLE `imageInfo`
-  MODIFY `imageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `imageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `transaction`
