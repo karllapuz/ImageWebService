@@ -123,15 +123,16 @@
                 <?php } ?>
 
                 <!-- RENDERED IF USER IS NOT SELLER  -->
-                <!-- <div id="sellerButton" class="ui animated teal button" tabindex="0">
-                    <div class="visible content">
-                        Become a Seller
+                <?php if($userType == 'consumer') { ?>
+                    <div id="sellerButton" class="ui animated teal button" tabindex="0">
+                        <div class="visible content">
+                            Become a Seller
+                        </div>
+                        <div class="hidden content">
+                            <i class="image icon"></i>
+                        </div> 
                     </div>
-                    <div class="hidden content">
-                        <i class="image icon"></i>
-                    </div> 
-                </div> -->
-
+                <?php } ?>
 
                 
                 <div id="deleteButton" class="ui animated negative button" tabindex="0">
@@ -209,9 +210,10 @@
             <div class="content">
                 Are you sure you want to upgrade your account to be a seller?
             </div>
-            <form action="" class="actions">
+            <form action="profile.php" method="post">
                 <div class="ui negative cancel button">No</div>
-                <button name="" class="ui positive approve right labeled icon button">Yes<i class="checkmark icon"></i> </button>
+                <!-- <button name="becomeSeller" class="ui positive approve right labeled icon button">Yes<i class="checkmark icon"></i> </button> -->
+                <input class="ui positive approve right teal submit button" type="submit" value="Yes" name="becomeSeller">
             </form>
         </div>
 

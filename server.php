@@ -87,5 +87,12 @@
 		}
 	}
 
+	if(isset($_POST['becomeSeller'])) {
+		$username = $_SESSION['username'];
+		$becomeSellerQuery = "UPDATE customer SET userType = 'seller' WHERE username = '$username';";
+		// echo $becomeSellerQuery;
+		$r = mysqli_query($db, $becomeSellerQuery); 
+	}
+
 
 ?>

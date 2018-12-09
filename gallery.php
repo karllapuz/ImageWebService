@@ -9,6 +9,19 @@
         header('location: login.php');
     }
 
+     // Fetch user information
+     $username = $_SESSION['username'];
+     $userQuery = "SELECT * FROM customer WHERE username='$username';";
+     $userResults = mysqli_query($db, $userQuery);
+     if(mysqli_num_rows($userResults) == 1) {
+         $user = mysqli_fetch_assoc($userResults);
+         $userID = $user['customerID'];
+         $firstName = $user['firstName'];
+         $lastName = $user['lastName'];
+         $userType = $user['userType'];
+         $credits = $user['credits'];
+     }
+
     if(!empty($_GET["action"])) {
         switch($_GET["action"]) {
             case "logout":
@@ -81,7 +94,7 @@
                         <div class="ui item">
                             <button class="ui right labeled icon green button">
                             <i class="plus icon"></i>
-                                Credits: 3
+                                Credits: <?php echo $credits ?>
                             </button>
                         </div>
                         <div class="ui item">
