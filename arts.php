@@ -179,12 +179,12 @@
                         <div class="ui item">
                             <p><strong>Welcome, <?php echo $_SESSION['username']; ?>!</strong></p>
                         </div>
-                        <div class="ui item">
-                            <button class="ui right labeled icon green button">
+                        <form method="post" action="arts.php" class="ui item">
+                            <button type="submit" name="add_credits"class="ui right labeled icon green button">
                             <i class="plus icon"></i>
                                 Credits: <?php echo $credits ?>
                             </button>
-                        </div>
+                        </form>
                         <div class="ui item">
                             <a class="ui negative button" href="gallery.php?action=logout">Log Out</a>
                         </div>
