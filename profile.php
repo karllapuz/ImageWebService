@@ -190,9 +190,9 @@
             <div class="content">
                 Are you sure you want to delete your account?
             </div>
-            <form action="" class="actions">
+            <form action="profile.php" method="post" class="actions">
                 <div class="ui positive cancel button">No</div>
-                <button name="" class="ui negative approve right labeled icon button">Yes<i class="checkmark icon"></i> </button>
+                <button name="delete_account" type="submit" class="ui negative approve right labeled icon button">Yes<i class="checkmark icon"></i> </button>
             </form>
         </div>
 
@@ -202,7 +202,7 @@
             <div class="content">
                 Are you sure you want to upgrade your account to be a seller?
             </div>
-            <form action="profile.php" method="post">
+            <form action="profile.php" method="post" class="actions">
                 <div class="ui negative cancel button">No</div>
                 <!-- <button name="becomeSeller" class="ui positive approve right labeled icon button">Yes<i class="checkmark icon"></i> </button> -->
                 <input class="ui positive approve right teal submit button" type="submit" value="Yes" name="becomeSeller">
