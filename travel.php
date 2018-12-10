@@ -262,39 +262,56 @@
             <!-- ALL TRAVEL PHOTOS -->
             <div class="ui four center aligned doubling stackable container cards">
 
-                <?php for ($i = 1; $i <= 16; $i++) { ?>
-                    <div class="ui column raised card">
-                        <div class="ui blurring dimmable image">
-                            <div class="ui dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                    <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                <?php 
+                    // for ($i = 1; $i <= 16; $i++) { 
+                    $imageProduct = query("SELECT * FROM imageInfo WHERE category = 'travel';");
+                    if(!empty($imageProduct)) {
+                        foreach($imageProduct as $key => $value) {
+                            $imageID = $imageProduct[$key]['imageID'];
+                            $imageName = $imageProduct[$key]['imageName'];
+                            $category = $imageProduct[$key]['category'];
+                            $imagePath = $imageProduct[$key]['imagePath'];
+                            $photographer = $imageProduct[$key]['photographer'];
+                            $credits = $imageProduct[$key]['credits'];
+                            $uploader = $imageProduct[$key]['uploader'];
+                            $purchases = $imageProduct[$key]['purchases'];   
+                ?>
+                        <div class="ui column raised card">
+                            <div class="ui blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                        <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- <img src="https://picsum.photos/250"> -->
+                                <img src = <?php echo "images/".$imagePath ?> >
                             </div>
-                            <img src="https://picsum.photos/250">
+                            <div class="content">
+                                <h3 class="left aligned header"><?php echo $imageName ?></h3>
+                                <div class="right floated meta">
+                                    
+                                    <p class="ui green tag label"><?php echo $credits ?> credits</p>
+                                </div>
+                                <div class="left aligned">
+                                    
+                                    <span><em>by <?php echo $photographer ?></em></span>
+                                </div>
+                                <div class="left aligned description"><?php echo $category ?> 
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <span class="left floated">
+                                    <i class="users icon"></i>
+                                    <?php echo $purchases ?> Purchases
+                                </span>
+                            </div>
                         </div>
-                        <div class="content">
-                            <h3 class="left aligned header">Wild Sunset</h3>
-                            <div class="right floated meta">
-                                
-                                <p class="ui green tag label">1 credit</p>
-                            </div>
-                            <div class="left aligned">
-                                
-                                <span><em>by John Doe</em></span>
-                            </div>
-                            <div class="left aligned description">Travel 
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <span class="left floated">
-                                <i class="users icon"></i>
-                                12 Purchases
-                            </span>
-                        </div>
-                    </div>
-                <?php } ?>
+                <?php 
+                        } 
+                    }
+                ?>
             </div>
         
         </div>
