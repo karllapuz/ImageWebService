@@ -27,14 +27,6 @@
         $userType = $user['userType'];
         $credits = $user['credits'];
     }
-
-    // if($userType == 'consumer') {
-    //     echo "Consumer";
-    // } else if($userType == 'seller') {
-    //     echo "Seller";
-    // }
-
-    // echo $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -228,7 +220,7 @@
                     <img id="preview" src="assets/images/placeholder.jpg" alt="Preview">
                 </div>
                 <div class="description">
-                    <form class="ui large form" action="profile.php" method="post">
+                    <form class="ui large form" action="profile.php" method="post" enctype="multipart/form-data">
                         <div class="field">
                             <label>Upload Image</label>
                             <input id="imgInp" type="file" name="image">

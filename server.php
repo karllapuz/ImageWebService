@@ -10,6 +10,18 @@
     $lastName = "";
     $username = "";
 
+	 // Query function
+	 function query($query) {
+        $connect = mysqli_connect('localhost', 'mika', 'sesame', 'mika');
+        $result = mysqli_query($connect, $query);
+        while($row = mysqli_fetch_assoc($result)) {
+            $set[] = $row;
+        } 
+        if(!empty($set)) {
+            return $set;
+        }
+	}
+	
 	// CUSTOMER DATABASE
 	// Register a user
     if (isset($_POST['register'])) { 
@@ -93,43 +105,48 @@
 		// echo $becomeSellerQuery;
 		$r = mysqli_query($db, $becomeSellerQuery); 
 	}
-
+	
+	// IMAGES DATABASE
 	$image_link = "";
 	$image_name = "";
 	$category = "";
 	$photographer = "";
 	$credits = 1;
-
-	// IMAGES DATABASE
+	
 	// Uploads an image to the gallery
 	if (isset($_POST['upload_image'])) {
 
-        if (empty($_POST["image"]) || empty($_POST["image_name"]) || empty($_POST["credits"]) || empty($_POST["category"]) || empty($_POST["photographer"])) {
-
-        } else {
-			$image_link = $_POST["image"];
-			$image_name = $_POST["image_name"];
-            $category = $_POST["category"];
-			$photographer = $_POST["photographer"];
-			$credits = $_POST["credits"];
-
-            // Get customer id of the poster
-            if (isset($_SESSION['username'])) {
-
-                $username = $_SESSION['username'];
-                
-                $query = "INSERT INTO imageInfo (imageID, imageName, category, imagePath, photographer, credits, uploader, purchases) 
-                            VALUES(NULL, '$image_name', '$category', '$image_link', '$photographer', '$credits', '$username', 0)";
-                if (!mysqli_query($db, $query)) {
-					echo "ERROR: Could not execute. " . mysqli_error($db);
+		// Fetch inputs
+        $image_link = $_FILES['image']['name'];
+        $image_name = mysqli_real_escape_string($db, $_POST['image_name']);
+        $category = mysqli_real_escape_string($db, $_POST['category']);
+		$photographer = mysqli_real_escape_string($db, $_POST['photographer']);
+        $credits = mysqli_real_escape_string($db, $_POST['credits']);
+        
+        // Form Validation
+        if (empty($image_link)) { array_push($errors, "Upload file is required"); }
+        if (empty($image_name)) { array_push($errors, "Name of image is required"); }
+		if (empty($category)) { array_push($errors, "Please specify a category"); }
+		if (empty($photographer)) { array_push($errors, "Photographer name is required"); }
+		if (empty($credits)) { array_push($errors, "Please specify credits for the image"); }
+        
+        
+        // If no errors, proceed to register user
+		if (count($errors) == 0) {
+			$username = $_SESSION['username'];
+			$query = "INSERT INTO imageInfo (imageID, imageName, category, imagePath, photographer, credits, uploader, purchases) 
+							VALUES(NULL, '$image_name', '$category', '$image_link', '$photographer', '$credits', '$username', 0)";
+            $results = mysqli_query($db, $query);
+			$target = "images/".basename($_FILES['image']['name']);
+				// Save image file to images folder
+				if(move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+					$msg = "Image upload successful";
+				} else {
+					$msg = "Image upload failed";
 				}
-            }
-            else {
-                header("Location: login.php");
-            }
-        }
+		}
 	}
-
+	
 	function addWatermark($image, $fileNameOut) {
 
 		$watermark = imagecreatefrompng("assets/images/watermark.png");
