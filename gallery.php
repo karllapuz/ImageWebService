@@ -227,7 +227,7 @@
                 <div class="ui raised attached segment">
                     <div class="ui four center aligned doubling stackable container cards">
 
-                        <?php for ($i = 1; $i <= 8; $i++) { ?>
+                        <?php for ($i = 1; $i <= 4; $i++) { ?>
                             <div class="ui column raised card">
                                 <div class="ui blurring dimmable image">
                                     <div class="ui dimmer">
