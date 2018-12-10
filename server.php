@@ -105,6 +105,22 @@
 		// echo $becomeSellerQuery;
 		$r = mysqli_query($db, $becomeSellerQuery); 
 	}
+
+	// Add credits to account 
+	if (isset($_POST['add_credits'])) {
+		$username = $_SESSION['username'];
+		$query = "UPDATE customer SET credits = credits + 1 WHERE username = '$username';";
+		$r = mysqli_query($db, $query); 
+	}
+
+	// Delete account 
+	if (isset($_POST['delete_account'])) {
+		$username = $_SESSION['username'];
+		$query = "DELETE FROM customer WHERE username='$username';";
+		session_unset();
+		$r = mysqli_query($db, $query); 
+		header("Location: index.php");
+	}
 	
 	// IMAGES DATABASE
 	$image_link = "";
@@ -152,7 +168,7 @@
 		$watermark = imagecreatefrompng("assets/images/watermark.png");
 
 		list($widthWatermark, $heightWatermark) = getimagesize("assets/images/watermark.png");
-		list($widthBackground, $heightBackground) = getimagesize($image);
+		list($widthBackground, $heightBackground) = getimagesize("images/".$image);
 
 		// Centers the watermark
 		$xPos = ($widthBackground / 2) - ($widthWatermark / 2);
@@ -173,7 +189,7 @@
 
 		// $watermark = $final;
 
-		$backgroundImage = imagecreatefromjpeg($image);
+		$backgroundImage = imagecreatefromjpeg("images/".$image);
 
 		$watermarkImageWidth = imagesx($watermark);
 		$watermarkImageHeight = imagesy($watermark);
@@ -196,7 +212,7 @@
 				imagesetpixel($backgroundImage, $x + $xPos, $y + $yPos, $color);
 			}
 		}
-		imagejpeg($backgroundImage, $fileNameOut);
+		imagejpeg($backgroundImage, "images/".$fileNameOut);
 		return $fileNameOut;
 	}
 
