@@ -179,12 +179,12 @@
                         <div class="ui item">
                             <p><strong>Welcome, <?php echo $_SESSION['username']; ?>!</strong></p>
                         </div>
-                        <div class="ui item">
-                            <button class="ui right labeled icon green button">
+                        <form method="post" action="travel.php" class="ui item">
+                            <button type="submit" name="add_credits"class="ui right labeled icon green button">
                             <i class="plus icon"></i>
                                 Credits: <?php echo $credits ?>
                             </button>
-                        </div>
+                        </form>
                         <div class="ui item">
                             <a class="ui negative button" href="gallery.php?action=logout">Log Out</a>
                         </div>
@@ -218,12 +218,12 @@
                     <div class="ui four center aligned doubling stackable container cards">
 
                         <?php for ($i = 1; $i <= 4; $i++) { ?>
-                            <div class="ui column raised card">
+                            <form method="post" action="" class="ui column raised card">
                                 <div class="ui blurring dimmable image">
                                     <div class="ui dimmer">
                                         <div class="content">
                                             <div class="center">
-                                            <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                                            <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +248,7 @@
                                         12 Purchases
                                     </span>
                                 </div>
-                            </div>
+                        </form>
                         <?php } ?>
                     </div>
                 </div>
@@ -274,25 +274,34 @@
                             $photographer = $imageProduct[$key]['photographer'];
                             $credits = $imageProduct[$key]['credits'];
                             $uploader = $imageProduct[$key]['uploader'];
-                            $purchases = $imageProduct[$key]['purchases'];   
+                            $purchases = $imageProduct[$key]['purchases'];
+                            
+                            // Add watermark to the image
+                            $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
+                            
+                            // Plurals
+                            $creditString = "credit";
+                            $purchaseString = "Purchase";
+                            if ($credits > 1) $creditString = "credits";
+                            if ($purchases > 1) $purchaseString = "Purchases";
                 ?>
-                        <div class="ui column raised card">
+                        <form method="post" action="" class="ui column raised card">
                             <div class="ui blurring dimmable image">
                                 <div class="ui dimmer">
                                     <div class="content">
                                         <div class="center">
-                                        <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                                        <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- <img src="https://picsum.photos/250"> -->
-                                <img src = <?php echo "images/".$imagePath ?> >
+                                <img src = <?php echo "images/".$watermarked ?> >
                             </div>
                             <div class="content">
                                 <h3 class="left aligned header"><?php echo $imageName ?></h3>
                                 <div class="right floated meta">
                                     
-                                    <p class="ui green tag label"><?php echo $credits ?> credits</p>
+                                    <p class="ui green tag label"><?php echo "$credits $creditString" ?></p>
                                 </div>
                                 <div class="left aligned">
                                     
@@ -304,10 +313,10 @@
                             <div class="extra content">
                                 <span class="left floated">
                                     <i class="users icon"></i>
-                                    <?php echo $purchases ?> Purchases
+                                    <?php echo "$purchases $purchaseString" ?>
                                 </span>
                             </div>
-                        </div>
+                        </form>
                 <?php 
                         } 
                     }
