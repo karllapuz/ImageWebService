@@ -237,7 +237,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <img src="https://picsum.photos/250">
+                                    <img src="<?php echo addWatermark("https://picsum.photos/1500", "result.png"); ?>">
                                 </div>
                                 <div class="content">
                                     <h3 class="left aligned header">Wild Sunset</h3>

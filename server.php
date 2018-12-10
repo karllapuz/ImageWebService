@@ -128,6 +128,59 @@
                 header("Location: login.php");
             }
         }
-    }
+	}
+
+	function addWatermark($image, $fileNameOut) {
+
+		$watermark = imagecreatefrompng("assets/images/watermark.png");
+
+		list($widthWatermark, $heightWatermark) = getimagesize("assets/images/watermark.png");
+		list($widthBackground, $heightBackground) = getimagesize($image);
+
+		// Centers the watermark
+		$xPos = ($widthBackground / 2) - ($widthWatermark / 2);
+		$yPos = ($heightBackground / 2) - ($heightWatermark / 2);
+
+		// Scales the watermark with the background's size
+		// $ratio = $widthWatermark / $heightWatermark;
+		// if ($widthBackground / $heightBackground > $ratio) {
+		//     $newwidth = $heightBackground * $ratio;
+		//     $newheight = $heightBackground;
+		// } else {
+		//     $newheight = $widthBackground / $ratio;
+		//     $newwidth = $widthBackground;
+		// }
+
+		// $final = imagecreatetruecolor($newwidth, $newheight);
+		// imagecopyresampled($final, $watermark, 0, 0, 0, 0, $newwidth, $newheight, $widthWatermark, $heightWatermark);
+
+		// $watermark = $final;
+
+		$backgroundImage = imagecreatefromjpeg($image);
+
+		$watermarkImageWidth = imagesx($watermark);
+		$watermarkImageHeight = imagesy($watermark);
+
+		for ($x = 0; $x < $watermarkImageWidth; ++$x) {
+			for ($y = 0; $y < $watermarkImageHeight; ++$y) {
+				
+
+				// Get the color index of a position in both images
+				$rgbaForeground = imagecolorat($watermark, $x, $y);
+
+				// Get each value or rgb from index
+				$r = ($rgbaForeground >> 16) & 0xFF;
+				$g = ($rgbaForeground >> 8) & 0xFF;
+				$b = $rgbaForeground & 0xFF;
+				$a = ($rgbaForeground >> 24) & 0x7F;
+
+				$color = imagecolorallocatealpha($watermark, $r, $g, $b, $a);
+				// Set the color to be embedded in the picture in the in the position indicated
+				imagesetpixel($backgroundImage, $x + $xPos, $y + $yPos, $color);
+			}
+		}
+		imagejpeg($backgroundImage, $fileNameOut);
+		return $fileNameOut;
+	}
 
 ?>
