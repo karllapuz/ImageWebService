@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2018 at 02:00 PM
+-- Generation Time: Dec 10, 2018 at 09:06 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -70,11 +70,8 @@ CREATE TABLE `imageInfo` (
 --
 
 INSERT INTO `imageInfo` (`imageID`, `imageName`, `category`, `imagePath`, `photographer`, `credits`, `uploader`, `purchases`) VALUES
-(1, 'San Diego Sunset', 'Nature', 'IMG_2312.JPG', 'M Luong', 0, NULL, NULL),
-(2, 'Union Square SF', 'City', 'IMG_5518.JPG', 'M Luong', 0, NULL, NULL),
-(3, 'San Francisco', 'Nature ', 'IMG_5520.JPG', 'M Luong', 0, NULL, NULL),
-(4, 'Santa Cruz Waves', 'Nature', 'IMG_2422.JPG', 'M Luong', 0, NULL, NULL),
-(8, 'Capitola Houses', 'Architecture', '82AF9669-8A07-4AAD-A7B1-7A0C0572282E.jpg', 'Katelynn Tran', 4, 'karl', 0);
+(41, 'Raindrops', 'Nature', 'raindrops.jpg', 'Karl ', 3, 'imichelle97', 0),
+(42, 'Mason Street', 'Travel', 'IMG_5515.JPG', 'Michelle Luong', 2, 'imichelle97', 0);
 
 -- --------------------------------------------------------
 
@@ -140,7 +137,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `imageInfo`
 --
 ALTER TABLE `imageInfo`
-  MODIFY `imageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `imageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `transaction`
