@@ -247,7 +247,7 @@
                         <form method="post" action="gallery.php" class="ui item">
                             <button type="submit" name="add_credits"class="ui right labeled icon green button">
                             <i class="plus icon"></i>
-                                Credits: <?php echo $credits ?>
+                                Credits: <?php echo $userCredits ?>
                             </button>
                         </form>
                         <div class="ui item">
