@@ -15,15 +15,66 @@
          $firstName = $user['firstName'];
          $lastName = $user['lastName'];
          $userType = $user['userType'];
-         $credits = $user['credits'];
+         $userCredits = $user['credits'];
      }
 
+    
+
+    if(!empty($_GET["imageID"]))
+    {
+        //creating array of products for cart with image_id as the key
+        $products = query("SELECT * FROM imageInfo WHERE imageID='" . $_GET["imageID"] . "'");
+        $itemArray =
+            array
+            (
+                $products[0]["imageID"]=>
+                array
+                (
+                    'imageID'=>$products[0]["imageID"],
+                    'image'=>$products[0]["imagePath"],
+                    'imageName'=>$products[0]["imageName"],
+                    'category'=>$products[0]["category"],
+                    'photographer'=>$products[0]["photographer"],
+                    'credits'=>$products[0]["credits"],
+                    'purchases'=>$products[0]["purchases"]
+                ) 
+            );
+    }
     if(!empty($_GET["action"])) {
         switch($_GET["action"]) {
             case "logout":
                 session_destroy();
                 unset($_SESSION["username"]);
                 header("location: index.php");
+                break;
+
+            case "add":
+                if(!empty($_SESSION["cart"]))
+                {
+                    $_SESSION["cart"] = $_SESSION["cart"] + $itemArray;
+                }
+                else
+                {
+                    $_SESSION["cart"] = $itemArray;
+                }
+                break;
+
+            case "remove":
+                if(!empty($_SESSION["cart"]))
+                {
+                    foreach($_SESSION["cart"] as $a => $b)
+                    {
+                        if($_GET["imageID"] == $b["imageID"])
+                        {
+                            unset($_SESSION["cart"][$a]);
+                        }
+                        if(empty($_SESSION["cart"]))
+                        {
+                            unset($_SESSION["cart"]);
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -53,54 +104,34 @@
                 <div class="ui middle aligned divided list">
                     <div class='item'>
                         <div class='ui grid'>
-
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by John Doe</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>1</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by Michelle Luong</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>3</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by Karl Lapuz</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>2</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <?php
+                                if(isset($_SESSION["cart"]))
+                                {
+                                    foreach($_SESSION["cart"] as $product)
+                                    {
+                                        $imageID = $product["imageID"];
+                                        $imageName = $product["imageName"];
+                                        $credits = $product["credits"];
+                                        $photographer = $product["photographer"];
+                                        echo
+                                        "<div class='row'>
+                                        <div class='ten wide column middle aligned content'>
+                                            $imageName <br>
+                                            <em>by $photographer</em>
+                                        </div>
+                                        <div class='three wide column middle aligned content'>
+                                            <strong>$credits</strong>
+                                            <i class='copyright icon'></i>
+                                        </div>
+                                        <div class='three wide column middle aligned content'>
+                                            <a href='travel.php?action=remove&imageID=$imageID' class='ui negative icon button'>
+                                                <i class='trash alternate icon'></i>
+                                            </a>
+                                        </div>
+                                    </div>";
+                                    } 
+                                }
+                            ?>
 
                         </div>
                     </div> 
@@ -108,6 +139,16 @@
             </div>
 
             <!-- TOTAL -->
+            <?php
+                    $totalCredits = 0;
+                    if(isset($_SESSION["cart"]))
+                    {
+                        foreach($_SESSION["cart"] as $product)
+                        {
+                            $totalCredits += $product["credits"];
+                        }
+                    }
+                ?>
             <div class="item">
                 <div class="ui grid">
                     <div class="row">
@@ -116,7 +157,7 @@
                         </div>
                         <div class="six wide column right floated right aligned">
                             <span><h3>
-                                <strong>6</strong>
+                                <strong><?php echo $totalCredits; ?></strong>
                                 <i class="copyright icon"></i>
                             </h3></span>
                         </div>
@@ -126,18 +167,34 @@
 
             <!-- PURCHASE BUTTON -->
             <div class="item">
-
+                
                 <!-- RENDER IF TOTAL IS GREATER THAN CREDITS -->
-                <div class='ui negative limit message'>
-                    <div class='header'>
-                        Insufficient Credits!
-                    </div>
-                    <p>You do not have enough credits to make this purchase. Please remove some items in your shopping cart or add credits to your account.</p>
-                </div>
-                <button class='ui disabled fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+                <?php
+                    if($totalCredits > $userCredits)
+                    {
+                        echo
+                        "<div class='ui negative limit message'>
+                            <div class='header'>
+                                Insufficient Credits!
+                            </div>
+                            <p>You do not have enough credits to make this purchase. Please remove some items in your shopping cart or add credits to your account.</p>
+                        </div>
+                        <button class='ui disabled fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                    }
+                    else if($totalCredits == 0)
+                    {
+                        echo
+                        "<button class='ui disabled fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                    }
+                    
 
-                <!-- VALID PURCHASE BUTTON -->
-                <button class='ui fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+                //VALID PURCHASE BUTTON
+                else
+                {
+                    echo
+                    "<button class='ui fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                }
+                ?>
 
             </div>
         </div>
@@ -182,7 +239,7 @@
                         <form method="post" action="travel.php" class="ui item">
                             <button type="submit" name="add_credits"class="ui right labeled icon green button">
                             <i class="plus icon"></i>
-                                Credits: <?php echo $credits ?>
+                                Credits: <?php echo $userCredits ?>
                             </button>
                         </form>
                         <div class="ui item">
@@ -285,7 +342,7 @@
                             if ($credits > 1) $creditString = "credits";
                             if ($purchases > 1) $purchaseString = "Purchases";
                 ?>
-                        <form method="post" action="" class="ui column raised card">
+                        <form method="post" action="travel.php?action=add&imageID=<?php echo $imageProduct[$key]["imageID"]?>" class="ui column raised card">
                             <div class="ui blurring dimmable image">
                                 <div class="ui dimmer">
                                     <div class="content">
