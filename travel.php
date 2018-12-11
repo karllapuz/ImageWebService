@@ -214,10 +214,10 @@
                         <i class="dropdown icon"></i>
                         <div class="menu">
                             <a href="gallery.php"class="item">All Categories</a>
-                            <a href="travel.php"class="item">Travel</a>
+                            <a href="travel.php"class="active item">Travel</a>
                             <a href="architecture.php"class="item">Architecture</a>
                             <a href="people.php"class="item">People</a>
-                            <a href="nature.php"class="active item">Nature</a>
+                            <a href="nature.php"class="item">Nature</a>
                             <a href="food.php"class="item">Food</a>
                             <a href="arts.php"class="item">Arts</a>
                             <a href="sports.php"class="item">Sports</a>
