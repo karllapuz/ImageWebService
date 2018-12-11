@@ -1,5 +1,5 @@
 <?php
-    $pink = "pink";
+    session_save_path();
 ?>
 
 <!DOCTYPE html>
