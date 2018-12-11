@@ -18,8 +18,6 @@
          $userCredits = $user['credits'];
      }
 
-    
-
     if(!empty($_GET["imageID"]))
     {
         //creating array of products for cart with image_id as the key

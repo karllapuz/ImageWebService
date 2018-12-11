@@ -160,9 +160,9 @@
                         <div class="menu">
                             <a href="gallery.php"class="item">All Categories</a>
                             <a href="travel.php"class="item">Travel</a>
-                            <a href="architecture.php"class="item">Architecture</a>
+                            <a href="architecture.php"class="active item">Architecture</a>
                             <a href="people.php"class="item">People</a>
-                            <a href="nature.php"class="active item">Nature</a>
+                            <a href="nature.php"class="item">Nature</a>
                             <a href="food.php"class="item">Food</a>
                             <a href="arts.php"class="item">Arts</a>
                             <a href="sports.php"class="item">Sports</a>
@@ -179,7 +179,7 @@
                         <div class="ui item">
                             <p><strong>Welcome, <?php echo $_SESSION['username']; ?>!</strong></p>
                         </div>
-                        <form method="post" action="nature.php" class="ui item">
+                        <form method="post" action="architecture.php" class="ui item">
                             <button type="submit" name="add_credits"class="ui right labeled icon green button">
                             <i class="plus icon"></i>
                                 Credits: <?php echo $credits ?>
@@ -239,7 +239,7 @@
                                         
                                         <span><em>by John Doe</em></span>
                                     </div>
-                                    <div class="left aligned description">Nature 
+                                    <div class="left aligned description">Architecture 
                                     </div>
                                 </div>
                                 <div class="extra content">
@@ -262,7 +262,29 @@
             <!-- ALL TRAVEL PHOTOS -->
             <div class="ui four center aligned doubling stackable container cards">
 
-                <?php for ($i = 1; $i <= 16; $i++) { ?>
+                <?php 
+                    // for ($i = 1; $i <= 16; $i++) { 
+                    $imageProduct = query("SELECT * FROM imageInfo WHERE category = 'nature';");
+                    if(!empty($imageProduct)) {
+                        foreach($imageProduct as $key => $value) {
+                            $imageID = $imageProduct[$key]['imageID'];
+                            $imageName = $imageProduct[$key]['imageName'];
+                            $category = $imageProduct[$key]['category'];
+                            $imagePath = $imageProduct[$key]['imagePath'];
+                            $photographer = $imageProduct[$key]['photographer'];
+                            $credits = $imageProduct[$key]['credits'];
+                            $uploader = $imageProduct[$key]['uploader'];
+                            $purchases = $imageProduct[$key]['purchases'];
+                            
+                            // Add watermark to the image
+                            $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
+                            
+                            // Plurals
+                            $creditString = "credit";
+                            $purchaseString = "Purchase";
+                            if ($credits > 1) $creditString = "credits";
+                            if ($purchases > 1) $purchaseString = "Purchases";
+                ?>
                     <div class="ui column raised card">
                         <div class="ui blurring dimmable image">
                             <div class="ui dimmer">
@@ -272,29 +294,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="https://picsum.photos/250">
+                            <img src = <?php echo "images/".$watermarked ?> >
                         </div>
                         <div class="content">
-                            <h3 class="left aligned header">Wild Sunset</h3>
+                            <h3 class="left aligned header"><?php echo $imageName ?></h3>
                             <div class="right floated meta">
                                 
-                                <p class="ui green tag label">1 credit</p>
+                                <p class="ui green tag label"><?php echo "$credits $creditString" ?></p>
                             </div>
                             <div class="left aligned">
                                 
-                                <span><em>by John Doe</em></span>
+                                <span><em>by <?php echo $photographer ?></em></span>
                             </div>
-                            <div class="left aligned description">Nature 
+                            <div class="left aligned description"><?php echo $category ?>
                             </div>
                         </div>
                         <div class="extra content">
                             <span class="left floated">
                                 <i class="users icon"></i>
-                                12 Purchases
+                                <?php echo "$purchases $purchaseString" ?>
                             </span>
                         </div>
                     </div>
-                <?php } ?>
+                    <?php 
+                        } 
+                    }
+                ?>
             </div>
         
         </div>
