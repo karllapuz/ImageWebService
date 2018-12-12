@@ -1,5 +1,4 @@
 <?php
-	session_save_path();
     session_start();
 
     // Database Credentials
@@ -11,8 +10,8 @@
     $lastName = "";
     $username = "";
 
-	 // Query function
-	 function query($query) {
+	// Query function
+	function query($query) {
         $connect = mysqli_connect('localhost', 'mika', 'sesame', 'mika');
         $result = mysqli_query($connect, $query);
         while($row = mysqli_fetch_assoc($result)) {
@@ -58,7 +57,7 @@
 			$password = sha1($password_1);
 	
 			$query = "INSERT INTO customer (customerID, username, password, firstName, lastName, userType, credits) 
-					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', 'consumer', 35)";
+					  VALUES(NULL, '$username', '$password', '$firstName', '$lastName', 'consumer', 20)";
             $results = mysqli_query($db, $query);
             // echo $query;
 
@@ -153,7 +152,8 @@
 			$username = $_SESSION['username'];
 			$query = "INSERT INTO imageInfo (imageID, imageName, category, imagePath, photographer, credits, uploader, purchases) 
 							VALUES(NULL, '$image_name', '$category', '$image_link', '$photographer', '$credits', '$username', 0)";
-            $results = mysqli_query($db, $query);
+			$results = mysqli_query($db, $query);
+			addWatermark($image_link, "MARKED_".$image_link);
 			$target = "images/".basename($_FILES['image']['name']);
 				// Save image file to images folder
 				if(move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
@@ -216,5 +216,86 @@
 		imagejpeg($backgroundImage, "images/".$fileNameOut);
 		return $fileNameOut;
 	}
+
+	// TRANSACTIONS DATABASE
+
+	// Purchase items
+	if (isset($_POST['purchase_items'])) {
+		if(isset($_SESSION["cart"])) {
+			$username = $_SESSION['username'];
+			$totalCredits = 0;
+			foreach ($_SESSION["cart"] as $product)
+			{
+				$imageID = $product["imageID"];
+				$imageCredit = $product["credits"];
+				$imagePurchases = $product["purchases"];
+				$totalCredits += $imageCredit;
+				$query = "INSERT INTO transaction (transactionID, username, imageID) 
+						VALUES(NULL, '$username', '$imageID');";
+				mysqli_query($db, $query);
+				$query = "UPDATE imageInfo SET purchases = purchases + 1 WHERE imageID = '$imageID';";
+				mysqli_query($db, $query);
+				// $quantity = $product["quantity"];
+				// $item_weight = $product["item_weight"];
+				// $item_total_weight = $item_weight * $quantity;
+				// $suffix = "lbs";
+				// if ($item_total_weight <= 1) {
+				// 	$suffix = "lb";
+				// }
+			}
+			$creditQuery = "UPDATE customer SET credits = credits - $totalCredits WHERE username = '$username';";
+			$r = mysqli_query($db, $creditQuery); 
+			unset($_SESSION['cart']);
+	  	}
+	}
+
+	// Display photos bought by the user
+	function show_purchased_images() {
+
+		// Fetch all the photo ID's from the transaction with specific user
+		$username = $_SESSION['username'];
+		$imagesQuery = "SELECT * FROM imageInfo JOIN transaction ON transaction.imageID = imageInfo.imageID
+						WHERE username = '$username';";
+		$images = query($imagesQuery);
+		if (!empty($images)) {
+			foreach($images as $key => $value)
+			{
+				$image_name = $images[$key]["imageName"];
+				$category = $images[$key]["category"];
+				$image = $images[$key]["imagePath"];
+				$photographer = $images[$key]["photographer"];
+				
+				echo "<div class='ui column raised card'>
+						<div class='ui blurring dimmable image'>
+							<div class='ui dimmer'>
+								<div class='content'>
+									<div class='center'>
+										<a target='_blank' href='images/$image' download><div class='ui inverted primary button'><i class='download icon'></i>Download</div></a>
+									</div>
+								</div>
+							</div>
+							<img src='images/$image'>
+						</div>
+						<div class='content'>
+							<h3 class='left aligned header'>$image_name</h3>
+							<div class='right floated meta'>
+								<div class='left aligned description'>
+									$category
+								</div>
+							</div>
+							<div class='left aligned'>
+								<span><em>by $photographer</em></span>
+							</div>
+						</div>
+					</div>";
+			}
+		}
+		else {
+			echo "<p>No photos purchased. Browse the gallery to buy some amazing photos!</p>";
+		}
+
+	}
+	
+	
 
 ?>
