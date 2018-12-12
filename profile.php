@@ -152,34 +152,8 @@
             <div class="ui raised attached segment">
                 <div class="ui four center aligned doubling stackable container cards">
 
-                    <?php for ($i = 1; $i <= 11; $i++) { ?>
-                        <div class="ui column raised card">
-                            <div class="ui blurring dimmable image">
-                                <div class="ui dimmer">
-                                    <div class="content">
-                                        <div class="center">
-                                        <a target="_blank" href="https://picsum.photos/250" download><div class="ui inverted primary button"><i class="download icon"></i>Download</div></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <img src="https://picsum.photos/250">
-                            </div>
-                            <div class="content">
-                                <h3 class="left aligned header">Wild Sunset</h3>
-                                <div class="right floated meta">
-                                    
-                                    <!-- <p class="ui green tag label">1 credit</p> -->
-                                    <div class="left aligned description">
-                                        Nature
-                                    </div>
-                                </div>
-                                <div class="left aligned">
-                                    
-                                    <span><em>by John Doe</em></span>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
+                    <?php show_purchased_images(); ?>
+                    
                 </div>
             </div>
         </div>
