@@ -15,15 +15,64 @@
          $firstName = $user['firstName'];
          $lastName = $user['lastName'];
          $userType = $user['userType'];
-         $credits = $user['credits'];
+         $userCredits = $user['credits'];
      }
 
+    if(!empty($_GET["imageID"]))
+    {
+        //creating array of products for cart with image_id as the key
+        $products = query("SELECT * FROM imageInfo WHERE imageID='" . $_GET["imageID"] . "'");
+        $itemArray =
+            array
+            (
+                $products[0]["imageID"]=>
+                array
+                (
+                    'imageID'=>$products[0]["imageID"],
+                    'image'=>$products[0]["imagePath"],
+                    'imageName'=>$products[0]["imageName"],
+                    'category'=>$products[0]["category"],
+                    'photographer'=>$products[0]["photographer"],
+                    'credits'=>$products[0]["credits"],
+                    'purchases'=>$products[0]["purchases"]
+                ) 
+            );
+    }
     if(!empty($_GET["action"])) {
         switch($_GET["action"]) {
             case "logout":
                 session_destroy();
                 unset($_SESSION["username"]);
                 header("location: index.php");
+                break;
+
+            case "add":
+                if(!empty($_SESSION["cart"]))
+                {
+                    $_SESSION["cart"] = $_SESSION["cart"] + $itemArray;
+                }
+                else
+                {
+                    $_SESSION["cart"] = $itemArray;
+                }
+                break;
+
+            case "remove":
+                if(!empty($_SESSION["cart"]))
+                {
+                    foreach($_SESSION["cart"] as $a => $b)
+                    {
+                        if($_GET["imageID"] == $b["imageID"])
+                        {
+                            unset($_SESSION["cart"][$a]);
+                        }
+                        if(empty($_SESSION["cart"]))
+                        {
+                            unset($_SESSION["cart"]);
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -54,60 +103,51 @@
                     <div class='item'>
                         <div class='ui grid'>
 
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by John Doe</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>1</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by Michelle Luong</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>3</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class='row'>
-                                <div class='ten wide column middle aligned content'>
-                                    Name of Photo <br>
-                                    <em>by Karl Lapuz</em>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <strong>2</strong>
-                                    <i class="copyright icon"></i>
-                                </div>
-                                <div class='three wide column middle aligned content'>
-                                    <a href="" class="ui negative icon button">
-                                        <i class="trash alternate icon"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <?php
+                                if(isset($_SESSION["cart"]))
+                                {
+                                    foreach($_SESSION["cart"] as $product)
+                                    {
+                                        $imageID = $product["imageID"];
+                                        $imageName = $product["imageName"];
+                                        $credits = $product["credits"];
+                                        $photographer = $product["photographer"];
+                                        echo
+                                        "<div class='row'>
+                                        <div class='ten wide column middle aligned content'>
+                                            $imageName <br>
+                                            <em>by $photographer</em>
+                                        </div>
+                                        <div class='three wide column middle aligned content'>
+                                            <strong>$credits</strong>
+                                            <i class='copyright icon'></i>
+                                        </div>
+                                        <div class='three wide column middle aligned content'>
+                                            <a href='others.php?action=remove&imageID=$imageID' class='ui negative icon button'>
+                                                <i class='trash alternate icon'></i>
+                                            </a>
+                                        </div>
+                                    </div>";
+                                    } 
+                                }
+                            ?>
 
                         </div>
                     </div> 
                 </div> 
             </div>
 
-            <!-- TOTAL -->
+             <!-- TOTAL -->
+             <?php
+                    $totalCredits = 0;
+                    if(isset($_SESSION["cart"]))
+                    {
+                        foreach($_SESSION["cart"] as $product)
+                        {
+                            $totalCredits += $product["credits"];
+                        }
+                    }
+                ?>
             <div class="item">
                 <div class="ui grid">
                     <div class="row">
@@ -116,7 +156,7 @@
                         </div>
                         <div class="six wide column right floated right aligned">
                             <span><h3>
-                                <strong>6</strong>
+                                <strong><?php echo $totalCredits; ?></strong>
                                 <i class="copyright icon"></i>
                             </h3></span>
                         </div>
@@ -126,18 +166,38 @@
 
             <!-- PURCHASE BUTTON -->
             <div class="item">
-
+                
                 <!-- RENDER IF TOTAL IS GREATER THAN CREDITS -->
-                <div class='ui negative limit message'>
-                    <div class='header'>
-                        Insufficient Credits!
-                    </div>
-                    <p>You do not have enough credits to make this purchase. Please remove some items in your shopping cart or add credits to your account.</p>
-                </div>
-                <button class='ui disabled fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+                <?php
+                    if($totalCredits > $userCredits)
+                    {
+                        echo
+                        "<div class='ui negative limit message'>
+                            <div class='header'>
+                                Insufficient Credits!
+                            </div>
+                            <p>You do not have enough credits to make this purchase. Please remove some items in your shopping cart or add credits to your account.</p>
+                        </div>
+                        <button class='ui disabled fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                    }
+                    else if($totalCredits == 0)
+                    {
+                        echo
+                        "<button class='ui disabled fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                    }
+                    
 
-                <!-- VALID PURCHASE BUTTON -->
-                <button class='ui fluid green button'><i class="dollar sign icon"></i> Confirm Purchase</button>
+                //VALID PURCHASE BUTTON
+                else
+                {
+                    echo 
+                    "<form action='profile.php' method='post'>
+                        <button type='submit' name='purchase_items' class='ui fluid green button'>
+                            <i class='dollar sign icon'></i> Confirm Purchase
+                        </button>
+                    </form>";
+                }
+                ?>
 
             </div>
         </div>
@@ -217,38 +277,65 @@
                 <div class="ui raised attached segment">
                     <div class="ui four center aligned doubling stackable container cards">
 
-                        <?php for ($i = 1; $i <= 4; $i++) { ?>
-                            <div class="ui column raised card">
-                                <div class="ui blurring dimmable image">
-                                    <div class="ui dimmer">
+                        <?php 
+                            $imagesQuery = "SELECT * FROM imageInfo WHERE category = 'others' ORDER BY purchases DESC;";
+                            $images = $db->query($imagesQuery);
+
+                            if(!empty($images)) {
+
+                                for ($x = 0; $x < 4; $x++) {
+                                    $images->data_seek($x);
+                                    $row = $images->fetch_array(MYSQLI_ASSOC);
+
+                                    $imageID = $row['imageID'];
+                                    $imageName = $row['imageName'];
+                                    $category = $row['category'];
+                                    $imagePath = $row['imagePath'];
+                                    $photographer = $row['photographer'];
+                                    $credits = $row['credits'];
+                                    $purchases = $row['purchases'];
+                                    
+                                    // Add watermark to the image
+                                    // $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
+                                    
+                                    // Plurals
+                                    $creditString = "credit";
+                                    $purchaseString = "Purchase";
+                                    if ($credits > 1) $creditString = "credits";
+                                    if ($purchases > 1) $purchaseString = "Purchases";
+                                    ?>
+                                    <form method="post" action="others.php?action=add&imageID=<?php echo $imageID ?>" class="ui column raised card">
+                                        <div class="ui blurring dimmable image">
+                                            <div class="ui dimmer">
+                                                <div class="content">
+                                                    <div class="center">
+                                                    <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="<?php echo "images/MARKED_".$imagePath; ?>">
+                                        </div>
                                         <div class="content">
-                                            <div class="center">
-                                            <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                                            <h3 class="left aligned header"><?php echo $imageName; ?></h3>
+                                            <div class="right floated meta">
+                                                
+                                                <p class="ui green tag label"><?php echo "$credits $creditString"; ?></p>
+                                            </div>
+                                            <div class="left aligned">
+                                                
+                                                <span><em>by <?php echo $photographer; ?></em></span>
+                                            </div>
+                                            <div class="left aligned description"><?php echo $category; ?> 
                                             </div>
                                         </div>
-                                    </div>
-                                    <img src="https://picsum.photos/250">
-                                </div>
-                                <div class="content">
-                                    <h3 class="left aligned header">Wild Sunset</h3>
-                                    <div class="right floated meta">
-                                        
-                                        <p class="ui green tag label">1 credit</p>
-                                    </div>
-                                    <div class="left aligned">
-                                        
-                                        <span><em>by John Doe</em></span>
-                                    </div>
-                                    <div class="left aligned description">Others 
-                                    </div>
-                                </div>
-                                <div class="extra content">
-                                    <span class="left floated">
-                                        <i class="users icon"></i>
-                                        12 Purchases
-                                    </span>
-                                </div>
-                            </div>
+                                        <div class="extra content">
+                                            <span class="left floated">
+                                                <i class="users icon"></i>
+                                                <?php echo "$purchases $purchaseString"; ?>
+                                            </span>
+                                        </div>
+                                    </form>
+                                <?php } ?>
                         <?php } ?>
                     </div>
                 </div>
@@ -259,42 +346,68 @@
                 VIEW ALL OTHERS PHOTOS
             </div>
 
-            <!-- ALL TRAVEL PHOTOS -->
+            <!-- ALL OTHER PHOTOS -->
             <div class="ui four center aligned doubling stackable container cards">
 
-                <?php for ($i = 1; $i <= 16; $i++) { ?>
-                    <div class="ui column raised card">
-                        <div class="ui blurring dimmable image">
-                            <div class="ui dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                    <a><div class="ui inverted green button"><i class="cart icon"></i>Add to cart</div></a>
+                <?php 
+                    // for ($i = 1; $i <= 16; $i++) { 
+                    $imageProduct = query("SELECT * FROM imageInfo WHERE category = 'others';");
+                    if(!empty($imageProduct)) {
+                        foreach($imageProduct as $key => $value) {
+                            $imageID = $imageProduct[$key]['imageID'];
+                            $imageName = $imageProduct[$key]['imageName'];
+                            $category = $imageProduct[$key]['category'];
+                            $imagePath = $imageProduct[$key]['imagePath'];
+                            $photographer = $imageProduct[$key]['photographer'];
+                            $credits = $imageProduct[$key]['credits'];
+                            $uploader = $imageProduct[$key]['uploader'];
+                            $purchases = $imageProduct[$key]['purchases'];
+                            
+                            // Add watermark to the image
+                            // addWatermark($imagePath, "MARKED_".$imagePath);
+                            
+                            // Plurals
+                            $creditString = "credit";
+                            $purchaseString = "Purchase";
+                            if ($credits > 1) $creditString = "credits";
+                            if ($purchases > 1) $purchaseString = "Purchases";
+                ?>
+                        <form method="post" action="others.php?action=add&imageID=<?php echo $imageProduct[$key]["imageID"]?>" class="ui column raised card">
+                            <div class="ui blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                        <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- <img src="https://picsum.photos/250"> -->
+                                <img src = <?php echo "images/MARKED_".$imagePath ?> >
                             </div>
-                            <img src="https://picsum.photos/250">
-                        </div>
-                        <div class="content">
-                            <h3 class="left aligned header">Wild Sunset</h3>
-                            <div class="right floated meta">
-                                
-                                <p class="ui green tag label">1 credit</p>
+                            <div class="content">
+                                <h3 class="left aligned header"><?php echo $imageName ?></h3>
+                                <div class="right floated meta">
+                                    
+                                    <p class="ui green tag label"><?php echo "$credits $creditString" ?></p>
+                                </div>
+                                <div class="left aligned">
+                                    
+                                    <span><em>by <?php echo $photographer ?></em></span>
+                                </div>
+                                <div class="left aligned description"><?php echo $category ?> 
+                                </div>
                             </div>
-                            <div class="left aligned">
-                                
-                                <span><em>by John Doe</em></span>
+                            <div class="extra content">
+                                <span class="left floated">
+                                    <i class="users icon"></i>
+                                    <?php echo "$purchases $purchaseString" ?>
+                                </span>
                             </div>
-                            <div class="left aligned description">Others 
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <span class="left floated">
-                                <i class="users icon"></i>
-                                12 Purchases
-                            </span>
-                        </div>
-                    </div>
-                <?php } ?>
+                        </form>
+                <?php 
+                        } 
+                    }
+                ?>
             </div>
         
         </div>

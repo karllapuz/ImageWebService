@@ -189,8 +189,12 @@
                 //VALID PURCHASE BUTTON
                 else
                 {
-                    echo
-                    "<button class='ui fluid green button'><i class='dollar sign icon'></i> Confirm Purchase</button>";
+                    echo 
+                    "<form action='profile.php' method='post'>
+                        <button type='submit' name='purchase_items' class='ui fluid green button'>
+                            <i class='dollar sign icon'></i> Confirm Purchase
+                        </button>
+                    </form>";
                 }
                 ?>
 
@@ -272,38 +276,65 @@
                 <div class="ui raised attached segment">
                     <div class="ui four center aligned doubling stackable container cards">
 
-                        <?php for ($i = 1; $i <= 4; $i++) { ?>
-                            <form method="post" action="" class="ui column raised card">
-                                <div class="ui blurring dimmable image">
-                                    <div class="ui dimmer">
+                        <?php 
+                            $imagesQuery = "SELECT * FROM imageInfo WHERE category = 'nature' ORDER BY purchases DESC;";
+                            $images = $db->query($imagesQuery);
+
+                            if(!empty($images)) {
+
+                                for ($x = 0; $x < 4; $x++) {
+                                    $images->data_seek($x);
+                                    $row = $images->fetch_array(MYSQLI_ASSOC);
+
+                                    $imageID = $row['imageID'];
+                                    $imageName = $row['imageName'];
+                                    $category = $row['category'];
+                                    $imagePath = $row['imagePath'];
+                                    $photographer = $row['photographer'];
+                                    $credits = $row['credits'];
+                                    $purchases = $row['purchases'];
+                                    
+                                    // Add watermark to the image
+                                    // $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
+                                    
+                                    // Plurals
+                                    $creditString = "credit";
+                                    $purchaseString = "Purchase";
+                                    if ($credits > 1) $creditString = "credits";
+                                    if ($purchases > 1) $purchaseString = "Purchases";
+                                    ?>
+                                    <form method="post" action="nature.php?action=add&imageID=<?php echo $imageID ?>" class="ui column raised card">
+                                        <div class="ui blurring dimmable image">
+                                            <div class="ui dimmer">
+                                                <div class="content">
+                                                    <div class="center">
+                                                    <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="<?php echo "images/MARKED_".$imagePath; ?>">
+                                        </div>
                                         <div class="content">
-                                            <div class="center">
-                                            <a><button type="submit" class="ui inverted green button"><i class="cart icon"></i>Add to cart</button></a>
+                                            <h3 class="left aligned header"><?php echo $imageName; ?></h3>
+                                            <div class="right floated meta">
+                                                
+                                                <p class="ui green tag label"><?php echo "$credits $creditString"; ?></p>
+                                            </div>
+                                            <div class="left aligned">
+                                                
+                                                <span><em>by <?php echo $photographer; ?></em></span>
+                                            </div>
+                                            <div class="left aligned description"><?php echo $category; ?> 
                                             </div>
                                         </div>
-                                    </div>
-                                    <img src="https://picsum.photos/250">
-                                </div>
-                                <div class="content">
-                                    <h3 class="left aligned header">Wild Sunset</h3>
-                                    <div class="right floated meta">
-                                        
-                                        <p class="ui green tag label">1 credit</p>
-                                    </div>
-                                    <div class="left aligned">
-                                        
-                                        <span><em>by John Doe</em></span>
-                                    </div>
-                                    <div class="left aligned description">Nature 
-                                    </div>
-                                </div>
-                                <div class="extra content">
-                                    <span class="left floated">
-                                        <i class="users icon"></i>
-                                        12 Purchases
-                                    </span>
-                                </div>
-                        </form>
+                                        <div class="extra content">
+                                            <span class="left floated">
+                                                <i class="users icon"></i>
+                                                <?php echo "$purchases $purchaseString"; ?>
+                                            </span>
+                                        </div>
+                                    </form>
+                                <?php } ?>
                         <?php } ?>
                     </div>
                 </div>
@@ -332,7 +363,7 @@
                             $purchases = $imageProduct[$key]['purchases'];
                             
                             // Add watermark to the image
-                            $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
+                            // $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);
                             
                             // Plurals
                             $creditString = "credit";
@@ -350,7 +381,7 @@
                                     </div>
                                 </div>
                                 <!-- <img src="https://picsum.photos/250"> -->
-                                <img src = <?php echo "images/".$watermarked ?> >
+                                <img src="<?php echo "images/MARKED_".$imagePath; ?>">
                             </div>
                             <div class="content">
                                 <h3 class="left aligned header"><?php echo $imageName ?></h3>
