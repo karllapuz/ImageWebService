@@ -1,7 +1,3 @@
-<?php
-    session_save_path();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
