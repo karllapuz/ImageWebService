@@ -55,6 +55,10 @@ h1 {
     background-color: #b5f2dc;
 }
 
+#profile {
+    min-height: 100%;
+}
+
 #navbar {
     padding-top: 10px;
 }

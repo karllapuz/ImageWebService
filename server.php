@@ -153,11 +153,11 @@
 			$query = "INSERT INTO imageInfo (imageID, imageName, category, imagePath, photographer, credits, uploader, purchases) 
 							VALUES(NULL, '$image_name', '$category', '$image_link', '$photographer', '$credits', '$username', 0)";
 			$results = mysqli_query($db, $query);
-			addWatermark($image_link, "MARKED_".$image_link);
 			$target = "images/".basename($_FILES['image']['name']);
 				// Save image file to images folder
 				if(move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
 					$msg = "Image upload successful";
+					addWatermark($image_link, "MARKED_".$image_link);
 				} else {
 					$msg = "Image upload failed";
 				}
