@@ -44,7 +44,8 @@
                     'category'=>$products[0]["category"],
                     'photographer'=>$products[0]["photographer"],
                     'credits'=>$products[0]["credits"],
-                    'purchases'=>$products[0]["purchases"]
+                    'purchases'=>$products[0]["purchases"],
+                    'uploader'=>$products[0]["uploader"]
                 ) 
             );
     }
@@ -122,6 +123,8 @@
                                         $imageName = $product["imageName"];
                                         $credits = $product["credits"];
                                         $photographer = $product["photographer"];
+                                        $uploader = $product["uploader"];
+                                        // echo $uploader;
                                         echo
                                         "<div class='row'>
                                         <div class='ten wide column middle aligned content'>
@@ -303,6 +306,7 @@
                                     $photographer = $row['photographer'];
                                     $credits = $row['credits'];
                                     $purchases = $row['purchases'];
+                                    $uploader = $row['uploader'];
                                     
                                     // Add watermark to the image
                                     // $watermarked = addWatermark($imagePath, "MARKED_".$imagePath);

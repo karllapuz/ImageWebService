@@ -229,6 +229,7 @@
 				$imageID = $product["imageID"];
 				$imageCredit = $product["credits"];
 				$imagePurchases = $product["purchases"];
+				$uploader = $product["uploader"];
 				$totalCredits += $imageCredit;
 				$query = "INSERT INTO transaction (transactionID, username, imageID) 
 						VALUES(NULL, '$username', '$imageID');";
@@ -241,10 +242,19 @@
 				// $suffix = "lbs";
 				// if ($item_total_weight <= 1) {
 				// 	$suffix = "lb";
-				// }
+				// }	
+				// echo $uploader;
+				$uploaderCredit = "UPDATE customer SET credits = credits + $imageCredit WHERE username = '$uploader';";
+				mysqli_query($db, $uploaderCredit);
+				// echo $uploaderCredit;
+			
 			}
 			$creditQuery = "UPDATE customer SET credits = credits - $totalCredits WHERE username = '$username';";
 			$r = mysqli_query($db, $creditQuery); 
+
+			// $uploaderCredit = "UPDATE customer SET credits = credits + $imageCredit WHERE username = '$uploader';";
+			// echo $uploaderCredit;
+
 			unset($_SESSION['cart']);
 	  	}
 	}
