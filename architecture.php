@@ -34,7 +34,8 @@
                     'category'=>$products[0]["category"],
                     'photographer'=>$products[0]["photographer"],
                     'credits'=>$products[0]["credits"],
-                    'purchases'=>$products[0]["purchases"]
+                    'purchases'=>$products[0]["purchases"],
+                    'uploader'=>$products[0]["uploader"]
                 ) 
             );
     }
