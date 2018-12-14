@@ -3,8 +3,6 @@ CS 174 Project - Image Web Service
 
 ABOUT US: Mika is an image web service that compiles beautiful photographs and artwork that is contributed by fellow photographers and artists. Customers of Mika may purchase these photographs through Mika credits. If you are an apiring or professional photographer who would like to contribute to the community, you may be a Mika Seller and can upload your photographs. Mika brings together the art community through an easy and minimalistic application.
 
-USER GUIDE: You can view our user guide video here: https://youtu.be/wOKAsOR5QjM
-
 LOCAL CONFIGURATION: If you would like to run Mika on your local machine, you can download our source file. Our application uses the LAMP Stack (Linux, Apache, MySQL, PHP). We would recommend the following steps to ensure a successful installation of our application:
 
 Download our source files from the above GitHub Repository link.
