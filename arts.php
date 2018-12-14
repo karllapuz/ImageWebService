@@ -1,4 +1,9 @@
-<?php    
+<?php   
+
+    /*
+        Authors: Karl Lapuz and Michelle Luong
+    */
+
     include('server.php');
     if (!isset($_SESSION['username'])) {
         $_SESSION['msg'] = "You must log in first";

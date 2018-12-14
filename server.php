@@ -1,4 +1,9 @@
 <?php
+
+    /*
+        Authors: Karl Lapuz and Michelle Luong
+	*/
+	
     session_start();
 
     // Database Credentials

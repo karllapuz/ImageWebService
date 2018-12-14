@@ -1,3 +1,10 @@
+<?php
+
+    /*
+        Authors: Karl Lapuz and Michelle Luong
+    */
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

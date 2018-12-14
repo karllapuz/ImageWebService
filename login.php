@@ -1,4 +1,11 @@
-<?php include('server.php') ?>
+<?php 
+
+    /*
+        Authors: Karl Lapuz and Michelle Luong
+    */
+    
+    include('server.php') 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,4 +1,10 @@
 <?php
+
+    /*
+        Authors: Karl Lapuz and Michelle Luong
+    */
+
+    
     $categories = array("Travel", "Architecture", "People", "Nature", "Food", "Arts", "Sports", "Others");
     $categoryIcon = array("plane", "university", "user", "tree", "utensils", "paint brush", "football ball", "camera");
     $categoryDesc = array("See the beauty of the world from the lens of adventurers and trailblazers", 
